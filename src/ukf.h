@@ -95,6 +95,11 @@ class UKF {
 
   // Sigma point spreading parameter
   double lambda_;
+
+  Eigen::MatrixXd R_radar_;
+  Eigen::MatrixXd R_lidar_;
+  double NIS_radar_;
+  double NIS_laser_;
 };
 
 #endif  // UKF_H

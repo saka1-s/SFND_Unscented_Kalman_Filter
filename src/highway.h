@@ -4,7 +4,7 @@
 #include "render/render.h"
 #include "sensors/lidar.h"
 #include "tools.h"
-
+#include <fstream>
 class Highway
 {
 public:
@@ -16,6 +16,7 @@ public:
 	std::vector<double> rmseThreshold = {0.30,0.16,0.95,0.70};
 	std::vector<double> rmseFailLog = {0.0,0.0,0.0,0.0};
 	Lidar* lidar;
+	std::ofstream log;
 	
 	// Parameters 
 	// --------------------------------
@@ -103,8 +104,16 @@ public:
 		car1.render(viewer);
 		car2.render(viewer);
 		car3.render(viewer);
+
+		log.open("rmse.csv");
+		log << "t,px,py,vx,vy" << std::endl;
 	}
 	
+	~Highway()
+	{
+		log.close();
+	}
+
 	void stepHighway(double egoVelocity, long long timestamp, int frame_per_sec, pcl::visualization::PCLVisualizer::Ptr& viewer)
 	{
 
@@ -149,6 +158,8 @@ public:
 		viewer->addText(" Y: "+std::to_string(rmse[1]), 30, 250, 20, 1, 1, 1, "rmse_y");
 		viewer->addText("Vx: "	+std::to_string(rmse[2]), 30, 225, 20, 1, 1, 1, "rmse_vx");
 		viewer->addText("Vy: "	+std::to_string(rmse[3]), 30, 200, 20, 1, 1, 1, "rmse_vy");
+
+		log << timestamp/1e6 << "," << rmse[0] << "," << rmse[1] << "," << rmse[2] << "," << rmse[3] << std::endl;
 
 		if(timestamp > 1.0e6)
 		{

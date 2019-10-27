@@ -74,3 +74,7 @@ and performing clustering. This is similar to what was done in Sensor Fusion Lid
 This information is only accessible by people who are already enrolled in Sensor Fusion. 
 If you are enrolled, see the project page in the classroom
 for instructions and the project rubric.
+
+## Result
+The results of RMSE are less than the valuse [0.30, 0.16, 0.95, 0.70] after the simulator has ran for longer than 1 second. 
+![RMSE](result.png "Result of RMSE")
